@@ -1,0 +1,39 @@
+﻿@page "/location"
+@inherits CarsBlazorHybrid.Application.Components.CancellableComponent
+@using CarsBlazorHybrid.Application.Abstractions
+@inject IGeolocationService geolocationService
+
+<PageTitle>Location</PageTitle>
+
+@if (geolocation == null)
+{
+    <h1>Geolocation is not determined.</h1>
+    <button @onclick="TryGetLocation"  class="btn btn-primary">Try get location</button>
+}
+else
+{
+    <h1>
+        Your current location:<br/>
+        Latitude: @geolocation.Latitude<br/>
+        Longitude: @geolocation.Longitude
+    </h1>
+    <a href="https://yandex.ru/maps/?pt=@geolocation.Longitude,@geolocation.Latitude&z=12&l=map`}">Ссылка в Яндекс картах</a>
+
+}
+
+
+@code {
+
+    private GeolocationDto? geolocation = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+    }
+
+    private async Task TryGetLocation()
+    {
+        geolocation = await geolocationService.GetCurrentGeolocationAsync(_cts.Token);
+        StateHasChanged();
+    }
+}

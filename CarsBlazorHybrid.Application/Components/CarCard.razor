@@ -1,0 +1,44 @@
+@using CarsBlazorHybrid.Application.Models
+
+<div class="car-container">
+    <img
+        class="car-photo"
+        src="_content/@(AppNamespace.Get)/@Car.Model.ImgUrl"
+        alt="@CarName"/>
+
+    <div class="info-container">
+        <h2>@CarName</h2>
+        <div class="info-container-row">
+            <div>Mark:</div>
+            <div>@Car.Model.Mark.Name</div>
+        </div>
+        <div class="info-container-row">
+            <div>Model:</div>
+            <div>@Car.Model.Name</div>
+        </div>
+        <div class="info-container-row">
+            <div>Color:</div>
+            <div>@Car.Color.Name</div>
+        </div>
+        <div class="info-container-row">
+            <div>Vin:</div>
+            <div>@Car.Vin</div>
+        </div>
+    </div>
+    <div class="price">
+        @(Car.Price)$
+    </div>
+    <button class="btn btn-primary">Купить</button>
+</div>
+
+@code {
+    [Parameter] public required Car Car { get; set; }
+
+    private string CarName { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        CarName = $"{Car.Model.Mark.Name} {Car.Model.Name}";
+    }
+
+}

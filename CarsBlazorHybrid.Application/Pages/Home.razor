@@ -1,0 +1,25 @@
+﻿@page "/"
+@using CarsBlazorHybrid.Application.Models
+@using CarsBlazorHybrid.Application.Services
+@using CarsBlazorHybrid.Application.Components
+
+<PageTitle>Cars catalog</PageTitle>
+
+<h1>Cars catalog</h1>
+
+<div class="cars-container">
+    @foreach (var car in Cars)
+    {
+        <CarCard Car="car"/>
+    }
+</div>
+
+@code
+{
+    private Car[] Cars = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cars = CarRepository.Cars.Take(20).ToArray();
+    }
+}
